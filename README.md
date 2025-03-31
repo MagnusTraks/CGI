@@ -49,5 +49,5 @@ Tööd tegin nädalavahetusel ja ka esmaspäeval, kokku umbes **12 tundi**. Keer
 
 Koodi kirjutades oli raskeim osa andmete sünkroniseerimine andmebaasi ja Java klasside vahel, hiljem sealt ka front-endi laadida. Lisaks ei olnud ma päris kindel kohe, mis klasse vaja on. Olen sarnaseid töid varem teinud, nii et mingisugune aimdus oli olemas, aga selliste tööde juures tuleb alati töö käigus kõige paremini välja, mida vaja on. Lisaks sain natuke abi tehisintellekti tegevuskavast, kus olid osad vajaminevad klassid välja toodud.
 
-**AId kasutasin üksikutes kohtades**. Põhiliselt üherealised süntaksi- või loogikavigadega koodijupid, mistõttu ma neid ka eraldi kommenteerima ei hakkanud. Mõtted, ideed ja implementatsioon on kõik minult endalt.
+AId kasutasin üksikutes kohtades. Põhiliselt üherealised süntaksi- või loogikavigadega koodijupid, mistõttu ma neid ka eraldi kommenteerima ei hakkanud. Mõtted, ideed ja implementatsioon on kõik minult endalt.
 
