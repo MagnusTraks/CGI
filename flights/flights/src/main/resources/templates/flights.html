@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lennuotsing</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<h1>Otsi lende</h1>
+
+<form th:action="@{/}" method="get" class="filter-form">
+    <div>
+        <label for="destination">Sihtkoht:</label>
+        <input type="text" id="destination" name="destination" th:value="${destination}" placeholder="nt. HEL">
+    </div>
+    <div>
+        <label for="date">Kuupäev:</label>
+        <input type="date" id="date" name="date" th:value="${date}">
+    </div>
+    <div>
+        <label for="maxPrice">Max hind (€):</label>
+        <input type="number" id="maxPrice" name="maxPrice" step="0.01" min="0" th:value="${maxPrice}" placeholder="nt. 150.00">
+    </div>
+    <div>
+        <label for="maxDurationHours">Max lennuaeg (h):</label>
+        <input type="number" id="maxDurationHours" name="maxDurationHours" min="1" th:value="${maxDurationHours}" placeholder="nt. 2">
+    </div>
+    <div class="button-group">
+        <button type="submit">Otsi</button>
+        <a th:href="@{/}" class="button-link">Tühjenda filtrid</a>
+    </div>
+</form>
+
+<hr/>
+
+<h2>Saadaval lennud</h2>
+
+<div th:if="${#lists.isEmpty(flights)}">
+    <p>Vastavalt kriteeriumitele lende ei leitud.</p>
+    <div th:if="${param.error != null and param.error[0] == 'flightNotFound'}">
+        <p class="error-message">Viga: Eelnevalt valitud lendu ei leitud.</p>
+    </div>
+</div>
+
+<table border="1" th:unless="${#lists.isEmpty(flights)}" class="results-table">
+    <thead>
+    <tr>
+        <th>Lennu nr.</th>
+        <th>Lähtekoht</th>
+        <th>Sihtkoht</th>
+        <th>Väljumine</th>
+        <th>Saabumine</th>
+        <th>Kestvus</th>
+        <th>Hind</th>
+        <th>Lennuk</th>
+        <th>Tegevus</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="flight : ${flights}">
+        <td th:text="${flight.flightNumber}">AY1072</td>
+        <td th:text="${flight.origin}">TLL</td>
+        <td th:text="${flight.destination}">HEL</td>
+        <td th:text="${#temporals.format(flight.departureTime, 'yyyy-MM-dd HH:mm')}">2024-09-15 10:30</td>
+        <td th:text="${#temporals.format(flight.arrivalTime, 'yyyy-MM-dd HH:mm')}">2024-09-15 11:05</td>
+        <td th:text="${(flight.getDurationInMinutes() / 60) + 'h ' + (flight.getDurationInMinutes() % 60) + 'm'}">1h 35m</td>
+        <td th:text="${#numbers.formatDecimal(flight.price, 1, 'COMMA', 2, 'POINT')} + ' €'">85.50 €</td>
+        <td th:text="${flight.aircraft?.model}">ATR 72</td>
+        <td>
+            <a th:href="@{/flight/{id}/seats(id=${flight.id})}">Vali kohad</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,293 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: 20px;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+h1, h2, h3 {
+    color: #343a40;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; }
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+hr {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 0;
+    border-top: 1px solid #dee2e6;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+th, td {
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+    vertical-align: top;
+}
+
+th {
+    background-color: #e9ecef;
+    font-weight: 600;
+    text-align: inherit;
+}
+
+.results-table tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.03);
+}
+
+.filter-form div {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.filter-form label {
+    display: inline-block;
+    width: 120px;
+    margin-right: 0.5rem;
+    font-weight: 500;
+}
+
+.filter-form label.checkbox-label {
+    width: auto;
+    margin-left: 0.25rem;
+    font-weight: normal;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+button, .button-link {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    text-decoration: none;
+}
+
+button:hover, .button-link:hover {
+    color: #fff;
+    background-color: #0056b3;
+    border-color: #0056b3;
+    text-decoration: none;
+}
+
+.button-group {
+    padding-left: 125px;
+}
+
+.button-group a, .button-group button {
+    margin-right: 0.5rem;
+}
+
+.error-message {
+    color: #dc3545;
+    font-weight: bold;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.recommendation-result {
+    margin-top: 1rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.25rem;
+    background-color: #e2f0fb;
+    border: 1px solid #b8daff;
+}
+
+.recommendation-result.no-results {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.recommendation-result h3 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.recommended-list {
+    color: #0056b3;
+    font-weight: bold;
+}
+
+.seat-map {
+    border-collapse: separate;
+    border-spacing: 3px 3px;
+    margin-top: 20px;
+    background-color: transparent;
+    box-shadow: none;
+    width: auto;
+    display: inline-block;
+}
+
+.seat-map td, .seat-map th {
+    border: 1px solid #adb5bd;
+    padding: 0;
+    text-align: center;
+    min-width: 45px;
+    height: 35px;
+    vertical-align: middle;
+    background-color: #fff;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.seat-map th {
+    background-color: #f8f9fa;
+    font-weight: normal;
+    border: none;
+}
+
+.seat-map .row-header {
+    font-weight: bold;
+    background-color: #f8f9fa;
+    border: none;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.seat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    cursor: default;
+    font-size: 0.9em;
+    font-weight: 500;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.seat.available {
+    background-color: #c3e6cb;
+    color: #155724;
+}
+.seat.occupied { background-color: #f8d7da; color: #842029; cursor: not-allowed;}
+.seat.recommended {
+    background-color: #cff4fc;
+    color: #055160;
+    box-shadow: inset 0 0 0 2px #0d6efd;
+    font-weight: bold;
+}
+
+.seat.window::before, .seat.window::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    width: 4px;
+    background-color: #0d6efd;
+    border-radius: 2px;
+}
+
+.seat.window::before { left: 2px; }
+.seat.window::after { right: 2px; }
+
+.seat.extra-legroom {
+    font-style: italic;
+    background-image: linear-gradient(135deg, rgba(255,255,255,0) 45%, rgba(108,117,125,0.3) 50%, rgba(255,255,255,0) 55%, rgba(255,255,255,0) 100%);
+    background-repeat: repeat;
+    background-size: 8px 8px;
+    font-weight: bold;
+}
+.seat-example {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    border-radius: 3px;
+    background-color: #fff;
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    line-height: 18px;
+}
+
+.seat-example.available {
+    background-color: #c3e6cb;
+    border-color: #8fd19e;
+}
+.seat-example.occupied {
+    background-color: #f8d7da;
+    border-color: #f1b0b7;
+}
+.seat-example.recommended {
+    background-color: #cff4fc;
+    border-color: #9eeaf9;
+    box-shadow: inset 0 0 0 2px #0d6efd;
+}
+.seat-example.window {
+    border-left: 3px solid #0d6efd;
+    border-right: 3px solid #0d6efd;
+    border-top-color: #ccc;
+    border-bottom-color: #ccc;
+}
+.seat-example.extra-legroom {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    background-image: linear-gradient(135deg, rgba(255,255,255,0) 45%, rgba(108,117,125,0.3) 50%, rgba(255,255,255,0) 55%, rgba(255,255,255,0) 100%);
+    background-repeat: repeat;
+    background-size: 6px 6px;
+}
+.seat-example.near-exit {
+    background-color: transparent;
+    border: 2px dashed #fd7e14;
+}

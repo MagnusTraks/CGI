@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Istekohtade valik</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+  <style>
+  </style>
+</head>
+<body>
+
+<a th:href="@{/}">« Tagasi lendude otsingusse</a>
+
+<h1>Vali kohad lennule <span th:text="${flight.flightNumber}">FL123</span></h1>
+<p>
+  <strong th:text="${flight.origin}">TLL</strong> → <strong th:text="${flight.destination}">HEL</strong> |
+  <span th:text="${#temporals.format(flight.departureTime, 'yyyy-MM-dd HH:mm')}">Kuup Aeg</span> |
+  Lennuk: <span th:text="${aircraft.model}">A320</span> (<span th:text="${aircraft.seatConfiguration}">ABC-DEF</span>)
+</p>
+
+<hr/>
+
+<h2>Istekoha eelistused</h2>
+
+<form th:action="@{/flight/{id}/recommend(id=${flight.id})}" th:object="${seatPreferences}" method="post" class="filter-form">
+  <div>
+    <label for="numberOfSeats">Kohtade arv:</label>
+    <input type="number" id="numberOfSeats" th:field="*{numberOfSeats}" min="1" max="10">
+  </div>
+  <div>
+    <label for="preferredSeatType">Eelistatud tüüp:</label>
+    <select id="preferredSeatType" th:field="*{preferredSeatType}">
+      <option value="">Ükskõik</option>
+      <option th:each="type : ${seatTypes}" th:value="${type}" th:text="${type.name()}">WINDOW</option>
+    </select>
+  </div>
+  <div>
+    <input type="checkbox" id="requireExtraLegroom" th:field="*{requireExtraLegroom}">
+    <label for="requireExtraLegroom" class="checkbox-label">Nõua lisajalaruumi</label>
+  </div>
+  <div>
+    <input type="checkbox" id="preferNearExit" th:field="*{preferNearExit}">
+    <label for="preferNearExit" class="checkbox-label">Eelista väljapääsu lähedust</label>
+  </div>
+  <div>
+    <input type="checkbox" id="requireAdjacentSeats" th:field="*{requireAdjacentSeats}">
+    <label for="requireAdjacentSeats" class="checkbox-label">Nõua kõrvuti asetsevaid kohti (kui mitu)</label>
+  </div>
+  <div class="button-group">
+    <button type="submit">Leia soovitatud kohad</button>
+  </div>
+</form>
+
+<div th:if="${recommendedSeatNumbers != null and not #lists.isEmpty(recommendedSeatNumbers)}" class="recommendation-result">
+  <h3>Soovitatud kohad: <span class="recommended-list" th:text="${#strings.listJoin(recommendedSeatNumbers, ', ')}"></span></h3>
+</div>
+<div th:if="${recommendationAttempted and #lists.isEmpty(recommendedSeatNumbers)}" class="recommendation-result no-results">
+  <h3>Vastavalt eelistustele sobivaid kohti ei leitud.</h3>
+</div>
+
+<hr/>
+
+<h2>Istekohtade plaan</h2>
+
+<div class="seat-legend">
+  <span>Legend:</span>
+  <span class="legend-item"><span class="seat-example available"></span> Saadaval</span>
+  <span class="legend-item"><span class="seat-example occupied"></span> Hõivatud</span>
+  <span class="legend-item"><span class="seat-example recommended"></span> Soovitatud</span>
+  <span class="legend-item"><span class="seat-example window"></span> Aken</span>
+  <span class="legend-item"><span class="seat-example extra-legroom"></span> Lisajalaruum</span>
+  <span class="legend-item"><span class="seat-example near-exit"></span> Väljapääsu lähedal</span>
+</div>
+
+<table class="seat-map">
+  <thead>
+  <tr>
+    <th>Rida</th>
+    <th:block th:each="seatChar, iterStat : ${seatChars}">
+      <td class="header-aisle-gap" th:if="${aisleAfterIndices.contains(iterStat.index - 1)}"></td>
+      <th th:text="${seatChar}">A</th>
+    </th:block>
+    <td class="header-aisle-gap" th:if="${aisleAfterIndices.contains(#lists.size(seatChars) - 1)}"></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="rowEntry : ${seatMapByRow.entrySet()}">
+    <td class="row-header" th:text="${rowEntry.key}">1</td>
+    <th:block th:each="seatChar, iterStat : ${seatChars}">
+      <td class="aisle-gap" th:if="${aisleAfterIndices.contains(iterStat.index - 1)}"></td>
+      <td th:with="currentSeat=${rowEntry.value.get(seatChar)}">
+        <div th:if="${currentSeat != null}"
+             th:text="${currentSeat.seatNumber}"
+             class="seat"
+             th:classappend="${currentSeat.occupied ? 'occupied' : 'available'} + ' ' +
+        ${currentSeat.type == T(com.cgi.flights.model.SeatType).WINDOW ? 'window' : ''} + ' ' +
+        ${currentSeat.type == T(com.cgi.flights.model.SeatType).AISLE ? 'aisle' : ''} + ' ' +
+        ${currentSeat.hasExtraLegroom ? 'extra-legroom' : ''} + ' ' +
+        ${currentSeat.isNearExit ? 'near-exit' : ''} + ' ' +
+        ${#lists.contains(recommendedSeatNumbers, currentSeat.seatNumber) ? 'recommended' : ''}">
+          1A
+        </div>
+        <div th:unless="${currentSeat != null}" class="seat-missing">?</div>
+      </td>
+    </th:block>
+    <td class="aisle-gap" th:if="${aisleAfterIndices.contains(#lists.size(seatChars) - 1)}"></td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
